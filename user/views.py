@@ -7,8 +7,13 @@ from .serializers import UserSerializer
 
 
 class CreateUserView(generics.CreateAPIView):
-    pass
+    serializer_class = UserSerializer
 
 
 class ManagerUserView(generics.RetrieveUpdateAPIView):
-    pass
+    serializer_class = UserSerializer
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def get_object(self):
+        return self.request.user

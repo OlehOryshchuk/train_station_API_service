@@ -35,3 +35,14 @@ class Route(models.Model):
 
     def __str__(self) -> str:
         return f"{self.source}-{self.destination}"
+
+
+class TrainType(models.Model):
+    name = models.CharField(unique=True, max_length=150)
+
+
+# class Train(models.Model):
+#     name = models.CharField(unique=True, max_length=255)
+#     cargo_num = models.PositiveIntegerField()
+#     places_in_cargo = models.PositiveIntegerField()
+#     train_y

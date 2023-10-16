@@ -72,3 +72,24 @@ class Crew(models.Model):
     @property
     def full_name(self) -> str:
         return self.first_name + " " + self.last_name
+
+
+class Trip(models.Model):
+    route = models.ForeignKey(
+        Route,
+        related_name="trips",
+        on_delete=models.CASCADE,
+    )
+    train = models.ForeignKey(
+        Train,
+        related_name="trips",
+        on_delete=models.CASCADE,
+    )
+    departure_time = models.DateTimeField()
+    arrival_time = models.DateTimeField()
+
+    class Meta:
+        ordering = ["departure_time"]
+
+    def __str__(self) -> str:
+        return self.route + " " + self.departure_time

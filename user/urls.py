@@ -19,3 +19,5 @@ urlpatterns = [
     path("register/", CreateUserView.as_view(), name="create"),
     path("me/", ManagerUserView.as_view(), name="manage"),
 ]
+
+app_name = "user"

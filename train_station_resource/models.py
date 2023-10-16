@@ -13,4 +13,22 @@ class Station(models.Model):
     longitude = models.FloatField()
 
 
+class Route(models.Model):
+    source = models.ForeignKey(
+        Station,
+        on_delete=models.CASCADE,
+        related_name="routes"
+    )
+    destination = models.ForeignKey(
+        Station,
+        on_delete=models.CASCADE,
+        related_name="routes"
+    )
+    distance = models.PositiveIntegerField()
 
+    class Meta:
+        unique_together = ["source", "destination"]
+        ordering = ["source", "destination"]
+
+    def __str__(self) -> str:
+        return f"{self.source}-{self.destination}"

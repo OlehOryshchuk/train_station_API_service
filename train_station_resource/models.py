@@ -108,3 +108,70 @@ class Order(models.Model):
 
     def __str__(self):
         return str(self.created_at)
+
+
+class Ticket(models.Model):
+    cargo = models.PositiveIntegerField()
+    seat = models.PositiveIntegerField()
+    trip = models.ForeignKey(
+        Trip,
+        on_delete=models.CASCADE,
+        related_name="tickets",
+    )
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.CASCADE,
+        related_name="tickets",
+    )
+
+    @staticmethod
+    def validate_ticket(
+            cargo: int,
+            seat: int,
+            train: Train,
+            error_to_raise
+    ):
+        for ticket_attr_value, ticket_attr_name, train_attr_name in [
+            (cargo, "cargo", "cargo_num"),
+            (seat, "seat", "places_in_cargo")
+        ]:
+            train_attr_value = getattr(train, train_attr_name)
+
+            if not (1 <= ticket_attr_value <= train_attr_value):
+                raise error_to_raise(
+                    {
+                        ticket_attr_name: f"{ticket_attr_name} "
+                        "number must be in available range: "
+                        f"(1, {train_attr_value})"
+                    }
+                )
+
+    def clean(self):
+        Ticket.validate_ticket(
+            self.cargo,
+            self.seat,
+            self.trip.train,
+            ValidationError,
+        )
+
+    def save(
+        self,
+        force_insert=False,
+        force_update=False,
+        using=None,
+        update_fields=None,
+    ):
+        self.full_clean()
+
+        return super().save(
+            force_insert, force_update, using, update_fields
+        )
+
+    def __str__(self) -> str:
+        return (
+            f"{str(self.trip)} (cargo: {self.cargo}, seat: {self.seat})"
+        )
+
+    class Meta:
+        unique_together = ["cargo", "seat", "trip"]
+        ordering = ["cargo", "seat"]

@@ -41,8 +41,19 @@ class TrainType(models.Model):
     name = models.CharField(unique=True, max_length=150)
 
 
-# class Train(models.Model):
-#     name = models.CharField(unique=True, max_length=255)
-#     cargo_num = models.PositiveIntegerField()
-#     places_in_cargo = models.PositiveIntegerField()
-#     train_y
+class Train(models.Model):
+    name = models.CharField(unique=True, max_length=255)
+    cargo_num = models.PositiveIntegerField()
+    places_in_cargo = models.PositiveIntegerField()
+    train_type = models.ForeignKey(
+        TrainType,
+        related_name="trains",
+        on_delete=models.CASCADE,
+    )
+
+    @property
+    def capacity(self) -> int:
+        return self.cargo_num * self.places_in_cargo
+
+    def __str__(self) -> str:
+        return self.name

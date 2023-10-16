@@ -40,6 +40,9 @@ class Route(models.Model):
 class TrainType(models.Model):
     name = models.CharField(unique=True, max_length=150)
 
+    def __str__(self) -> str:
+        return self.name
+
 
 class Train(models.Model):
     name = models.CharField(unique=True, max_length=255)

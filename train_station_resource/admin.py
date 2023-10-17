@@ -17,4 +17,8 @@ class StationAdmin(admin.ModelAdmin):
     search_fields = ["name"]
 
 
+@admin.register(Route)
+class RouteAdmin(admin.ModelAdmin):
+    search_fields = ["source", "destination"]
+    list_filter = ["distance"]
 

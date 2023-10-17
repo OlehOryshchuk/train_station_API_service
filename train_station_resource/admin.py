@@ -26,3 +26,11 @@ class RouteAdmin(admin.ModelAdmin):
 @admin.register(TrainType)
 class TrainTypeAdmin(admin.ModelAdmin):
     search_fields = ["name"]
+
+
+@admin.register(Train)
+class TrainAdmin(admin.ModelAdmin):
+    search_fields = ["name", "train_type__name"]
+    list_filter = ["cargo_num", "seats_in_cargo"]
+
+

@@ -45,6 +45,10 @@ class TrainType(models.Model):
 
 
 def train_image_file_path(instance: "Train", filename) -> str:
+    """Return filename in format 'train_name_uuid4.extension'
+        and store it in MEDIA_URL/uploads/trains/train_name_uuid4.extension
+    """
+
     _, extension = os.path.split(filename)
     filename = f"{slugify(instance.name)}-{uuid.uuid4()}{extension}"
     return os.path.join("uploads", "trains", filename)

@@ -26,3 +26,11 @@ class RouteSerializer(serializers.ModelSerializer):
         model = Route
         fields = "__all__"
 
+
+class TrainTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TrainType
+        fields = "__all__"
+
+
+

@@ -50,4 +50,9 @@ class TicketInline(admin.TabularInline):
     extra = 1
 
 
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    inlines = [TicketInline]
+    search_fields = ["user__email"]
+
 

@@ -44,6 +44,12 @@ class TrainType(models.Model):
         return self.name
 
 
+def train_image_file_path(instance: "Train", filename) -> str:
+    _, extension = os.path.split(filename)
+    filename = f"{slugify(instance.name)}-{uuid.uuid4()}{extension}"
+    return os.path.join("uploads", "trains", filename)
+
+
 class Train(models.Model):
     name = models.CharField(unique=True, max_length=255)
     cargo_num = models.PositiveIntegerField()
@@ -53,6 +59,7 @@ class Train(models.Model):
         related_name="trains",
         on_delete=models.CASCADE,
     )
+    image = models.ImageField(null=True, upload_to=train_image_file_path)
 
     @property
     def capacity(self) -> int:

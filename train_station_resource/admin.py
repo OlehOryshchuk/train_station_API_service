@@ -22,3 +22,7 @@ class RouteAdmin(admin.ModelAdmin):
     search_fields = ["source", "destination"]
     list_filter = ["distance"]
 
+
+@admin.register(TrainType)
+class TrainTypeAdmin(admin.ModelAdmin):
+    search_fields = ["name"]

@@ -34,3 +34,8 @@ class TrainAdmin(admin.ModelAdmin):
     list_filter = ["cargo_num", "seats_in_cargo"]
 
 
+@admin.register(Crew)
+class CrewAdmin(admin.ModelAdmin):
+    search_fields = ["first_name", "last_name"]
+
+

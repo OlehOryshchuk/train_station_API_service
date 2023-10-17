@@ -56,3 +56,4 @@ class OrderAdmin(admin.ModelAdmin):
     search_fields = ["user__email"]
 
 
+admin.site.register(Ticket)

@@ -20,12 +20,12 @@ class Route(models.Model):
     source = models.ForeignKey(
         Station,
         on_delete=models.CASCADE,
-        related_name="routes"
+        related_name="source_routes"
     )
     destination = models.ForeignKey(
         Station,
         on_delete=models.CASCADE,
-        related_name="routes"
+        related_name="destination_routes"
     )
     distance = models.PositiveIntegerField()
 
@@ -57,7 +57,7 @@ def train_image_file_path(instance: "Train", filename) -> str:
 class Train(models.Model):
     name = models.CharField(unique=True, max_length=255)
     cargo_num = models.PositiveIntegerField()
-    places_in_cargo = models.PositiveIntegerField()
+    seats_in_cargo = models.PositiveIntegerField()
     train_type = models.ForeignKey(
         TrainType,
         related_name="trains",
@@ -67,7 +67,7 @@ class Train(models.Model):
 
     @property
     def capacity(self) -> int:
-        return self.cargo_num * self.places_in_cargo
+        return self.cargo_num * self.seats_in_cargo
 
     def __str__(self) -> str:
         return self.name

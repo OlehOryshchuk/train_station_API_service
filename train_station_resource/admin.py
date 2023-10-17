@@ -43,3 +43,11 @@ class CrewAdmin(admin.ModelAdmin):
 class TripAdmin(admin.ModelAdmin):
     search_fields = ["route__source", "route__destination"]
     list_filter = ["train__train_type"]
+
+
+class TicketInline(admin.TabularInline):
+    model = Ticket
+    extra = 1
+
+
+

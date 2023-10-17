@@ -33,4 +33,8 @@ class TrainTypeSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class TrainSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Train
+        fields = "__all__"
 

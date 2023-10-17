@@ -144,7 +144,7 @@ class Ticket(models.Model):
     ):
         for ticket_attr_value, ticket_attr_name, train_attr_name in [
             (cargo, "cargo", "cargo_num"),
-            (seat, "seat", "places_in_cargo")
+            (seat, "seat", "seats_in_cargo")
         ]:
             train_attr_value = getattr(train, train_attr_name)
 

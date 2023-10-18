@@ -88,4 +88,5 @@ class TrainListSerializer(TrainSerializer):
     )
 
 
-class
+class TrainDetailSerialize(TrainSerializer):
+    train_type = TrainTypeSerializer(read_only=True)

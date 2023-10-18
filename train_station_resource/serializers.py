@@ -80,10 +80,14 @@ class TicketSerializer(serializers.ModelSerializer):
         )
         return data
 
-
     class Meta:
         model = Ticket
-        fields = "__all__"
+        fields = [
+            "id",
+            "cargo",
+            "seat",
+            "trip"
+        ]
 
 
 class RouteListSerializer(RouteSerializer):

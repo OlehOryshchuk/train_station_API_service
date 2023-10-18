@@ -85,11 +85,23 @@ class TicketSerializer(serializers.ModelSerializer):
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    tickets = TicketSerializer(many=True, read_only=False, allow_empty=False)
+    tickets = TicketSerializer(
+        many=True, read_only=False, allow_empty=False
+    )
 
     class Meta:
         model = Order
         fields = ["id", "tickets", "created_at"]
+
+    @transaction.atomic
+    def create(self, validated_data):
+        tickets = validated_data.pop("tickets")
+        order = Order.objects.create(**validated_data)
+
+        for ticket in tickets:
+            Ticket.objects.create(order=order, **ticket)
+
+        return order
 
 
 class RouteListSerializer(RouteSerializer):

@@ -195,3 +195,6 @@ class TripDetailSerializer(TripSerializer):
             "arrival_time",
         ]
 
+
+class TicketListSerializer(TicketSerializer):
+    trip = TripListSerializer(read_only=True)

@@ -37,6 +37,7 @@ class TrainSerializer(serializers.ModelSerializer):
     class Meta:
         model = Train
         fields = [
+            "id",
             "name",
             "cargo_num",
             "seats_in_cargo",
@@ -49,6 +50,7 @@ class CrewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Crew
         fields = [
+            "id",
             "first_name",
             "last_name",
             "full_name",
@@ -90,6 +92,7 @@ class TrainListSerializer(TrainSerializer):
     class Meta:
         model = Train
         fields = [
+            "id",
             "name",
             "cargo_num",
             "seats_in_cargo",
@@ -104,6 +107,7 @@ class TrainDetailSerialize(TrainSerializer):
     class Meta:
         model = Train
         fields = [
+            "id",
             "name",
             "cargo_num",
             "seats_in_cargo",

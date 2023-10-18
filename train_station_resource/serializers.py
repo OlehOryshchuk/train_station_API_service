@@ -162,8 +162,8 @@ class TripListSerializer(TripSerializer):
     train_image = serializers.ImageField(
         source="train.image", read_only=True,
     )
-    train_capacity = serializers.SlugRelatedField(
-        read_only=True, slug_field="capacity"
+    train_capacity = serializers.IntegerField(
+        read_only=True, source="train.capacity"
     )
     # TODO: when i will create TripViewSet i need to create field
     #  tickets_available using F(train.capacity) - COUNT(tickets)

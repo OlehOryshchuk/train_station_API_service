@@ -82,8 +82,10 @@ class RouteListSerializer(RouteSerializer):
     )
 
 
-class TrainLitSerializer(TrainSerializer):
+class TrainListSerializer(TrainSerializer):
     train_type = serializers.SlugRelatedField(
         read_only=True, slug_field="name",
     )
 
+
+class

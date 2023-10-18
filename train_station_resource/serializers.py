@@ -85,8 +85,8 @@ class RouteListSerializer(RouteSerializer):
 
 
 class TrainListSerializer(TrainSerializer):
-    train_type = serializers.SlugRelatedField(
-        read_only=True, slug_field="name",
+    train_type_name = serializers.CharField(
+        read_only=True, source="train_type.name"
     )
 
     class Meta:
@@ -96,7 +96,7 @@ class TrainListSerializer(TrainSerializer):
             "name",
             "cargo_num",
             "seats_in_cargo",
-            "train_type",
+            "train_type_name",
             "image",
         ]
 
@@ -127,6 +127,16 @@ class TripListSerializer(TripSerializer):
         many=True, read_only=True, slug_field="full_name"
     )
     route = serializers.StringRelatedField(read_only=True)
-    train = serializers.SlugRelatedField(
-        slug_field="name", read_only=True,
+    train_name = serializers.CharField(
+        sread_only=True, source="train.name"
     )
+
+    class Meta:
+        model = Trip
+        fields = [
+            "crew",
+            "route",
+            "train_name",
+            "departure_time",
+            "arrival_time",
+        ]

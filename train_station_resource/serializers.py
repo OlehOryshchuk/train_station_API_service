@@ -120,3 +120,13 @@ class TrainImageSerializer(TrainSerializer):
     class Meta:
         model = Train
         fields = ["id", "image"]
+
+
+class TripListSerializer(TripSerializer):
+    crew = serializers.SlugRelatedField(
+        many=True, read_only=True, slug_field="full_name"
+    )
+    route = serializers.StringRelatedField(read_only=True)
+    train = serializers.SlugRelatedField(
+        slug_field="name", read_only=True,
+    )

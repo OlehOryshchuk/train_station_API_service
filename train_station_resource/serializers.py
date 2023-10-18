@@ -36,5 +36,11 @@ class TrainTypeSerializer(serializers.ModelSerializer):
 class TrainSerializer(serializers.ModelSerializer):
     class Meta:
         model = Train
-        fields = "__all__"
+        fields = [
+            "name",
+            "cargo_num",
+            "seats_in_cargo",
+            "train_type",
+            "capacity",
+        ]
 

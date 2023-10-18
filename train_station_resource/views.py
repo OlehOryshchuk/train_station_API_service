@@ -13,6 +13,7 @@ from .serializers import (
     TrainTypeSerializer,
     TrainSerializer,
     TrainListSerializer,
+    TrainImageSerializer,
     TrainDetailSerialize,
     TripSerializer,
     TripListSerializer,
@@ -85,7 +86,23 @@ class TrainViewSet(
         if self.action == "retrieve":
             return TrainDetailSerialize
 
+        if self.action == "upload_image":
+            return TrainImageSerializer
+
         return TrainSerializer
+
+    @action(
+        methods=["post"],
+        detail=True,
+    )
+    def upload_image(self, request, pk=None):
+        train = self.get_object()
+        serializer = self.get_serializer(train, data=request.data)
+
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class TripViewSet(viewsets.ModelViewSet):

@@ -70,6 +70,17 @@ class OrderSerializer(serializers.ModelSerializer):
 
 
 class TicketSerializer(serializers.ModelSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs=attrs)
+        Ticket.validate_ticket(
+            attrs["cargo"],
+            attrs["seat"],
+            attrs["trip"].train,
+            ValidationError
+        )
+        return data
+
+
     class Meta:
         model = Ticket
         fields = "__all__"
@@ -151,3 +162,6 @@ class TripListSerializer(TripSerializer):
             "train_image",
             "train_capacity",
         ]
+
+
+

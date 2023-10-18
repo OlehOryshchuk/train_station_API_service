@@ -198,3 +198,7 @@ class TripDetailSerializer(TripSerializer):
 
 class TicketListSerializer(TicketSerializer):
     trip = TripListSerializer(read_only=True)
+
+
+class OrderListSerializer(OrderSerializer):
+    tickets = TicketListSerializer(many=True, read_only=True)

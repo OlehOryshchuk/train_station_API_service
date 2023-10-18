@@ -63,7 +63,8 @@ class TrainTypeViewSet(
     mixins.CreateModelMixin,
     viewsets.GenericViewSet,
 ):
-    pass
+    queryset = TrainType.objects.all()
+    serializer_class = TrainTypeSerializer
 
 
 class TrainViewSet(

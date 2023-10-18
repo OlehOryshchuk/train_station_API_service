@@ -37,7 +37,8 @@ class StationViewSet(
     mixins.CreateModelMixin,
     viewsets.GenericViewSet,
 ):
-    pass
+    queryset = Station.objects.all()
+    serializer_class = StationSerializer
 
 
 class RouteViewSet(

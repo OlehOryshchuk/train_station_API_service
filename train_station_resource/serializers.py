@@ -80,3 +80,10 @@ class RouteListSerializer(RouteSerializer):
     class Meta:
         model = Route
         fields = "__all__"
+
+
+class TrainLitSerializer(TrainSerializer):
+    train_type = serializers.SlugRelatedField(
+        read_only=True, slug_field="name",
+    )
+

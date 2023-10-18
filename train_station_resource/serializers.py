@@ -74,8 +74,12 @@ class TicketSerializer(serializers.ModelSerializer):
 
 
 class RouteListSerializer(RouteSerializer):
-    source = serializers.CharField(source="source.name")
-    destination = serializers.CharField(source="destination.name")
+    source = serializers.SlugRelatedField(
+        read_only=True, slug_field="name"
+    )
+    destination = serializers.SlugRelatedField(
+        read_only=True, slug_field="name"
+    )
 
     class Meta:
         model = Route

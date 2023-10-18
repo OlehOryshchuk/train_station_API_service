@@ -63,12 +63,6 @@ class TripSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class OrderSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Order
-        fields = "__all__"
-
-
 class TicketSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         data = super().validate(attrs=attrs)
@@ -88,6 +82,14 @@ class TicketSerializer(serializers.ModelSerializer):
             "seat",
             "trip"
         ]
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    tickets = TicketSerializer(many=True, read_only=False, allow_empty=False)
+
+    class Meta:
+        model = Order
+        fields = ["id", "tickets", "created_at"]
 
 
 class RouteListSerializer(RouteSerializer):

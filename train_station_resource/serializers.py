@@ -110,3 +110,9 @@ class TrainDetailSerialize(TrainSerializer):
             "train_type",
             "image",
         ]
+
+
+class TrainImageSerializer(TrainSerializer):
+    class Meta:
+        model = Train
+        fields = ["id", "image"]

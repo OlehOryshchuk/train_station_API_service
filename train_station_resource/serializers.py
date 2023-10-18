@@ -170,4 +170,9 @@ class TripListSerializer(TripSerializer):
         ]
 
 
+class TicketTakenPlacesSerializer(TicketSerializer):
+    class Meta:
+        model = Ticket
+        fields = ["id", "cargo", "seat"]
+
 

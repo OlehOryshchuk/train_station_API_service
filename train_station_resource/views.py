@@ -91,6 +91,7 @@ class TrainViewSet(
 
         return TrainSerializer
 
+    # TODO: don't forget to set permission_classes attr
     @action(
         methods=["post"],
         detail=True,

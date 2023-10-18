@@ -73,7 +73,19 @@ class TrainViewSet(
     mixins.RetrieveModelMixin,
     viewsets.GenericViewSet,
 ):
-    pass
+    queryset = Train.objects.select_related(
+        "train_type"
+    )
+    serializer_class = TrainSerializer
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            return TrainListSerializer
+
+        if self.action == "retrieve":
+            return TrainDetailSerialize
+
+        return TrainSerializer
 
 
 class TripViewSet(viewsets.ModelViewSet):

@@ -89,7 +89,26 @@ class TrainViewSet(
 
 
 class TripViewSet(viewsets.ModelViewSet):
-    pass
+    queryset = Trip.objects.select_related(
+        "train",
+        "route__source",
+        "route__destination",
+        "train__train_type",
+    ).prefetch_related(
+        "crew", "tickets"
+    ).annotate(available_tickets=(
+        F("train__cargo_num") * F("train__seats_in_cargo")
+        - Count("tickets")
+    ))
+    serializer_class = TripSerializer
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            return TripListSerializer
+        if self.action == "retrieve":
+            return TripDetailSerializer
+
+        return TripSerializer
 
 
 class OrderViewSet(

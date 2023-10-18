@@ -34,6 +34,9 @@ class Route(models.Model):
         ordering = ["source", "destination"]
 
     def __str__(self) -> str:
+        """If you want to change the Route string
+         representation then you need to be aware of
+         serializers.StringRelatedField in TripListSerializer"""
         return f"{str(self.source)}-{str(self.destination)}"
 
 

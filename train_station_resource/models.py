@@ -34,7 +34,7 @@ class Route(models.Model):
         ordering = ["source", "destination"]
 
     def __str__(self) -> str:
-        return f"{self.source}-{self.destination}"
+        return f"{str(self.source)}-{str(self.destination)}"
 
 
 class TrainType(models.Model):

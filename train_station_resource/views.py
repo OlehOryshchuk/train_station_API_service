@@ -46,7 +46,16 @@ class RouteViewSet(
     mixins.CreateModelMixin,
     viewsets.GenericViewSet,
 ):
-    pass
+    queryset = Route.objects.select_related(
+        "source", "destination"
+    )
+    serializer_class = RouteSerializer
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            return RouteListSerializer
+
+        return RouteSerializer
 
 
 class TrainTypeViewSet(

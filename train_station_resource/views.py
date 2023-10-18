@@ -134,4 +134,21 @@ class OrderViewSet(
     mixins.CreateModelMixin,
     viewsets.GenericViewSet,
 ):
-    pass
+    # TODO: Set permission_classes IsAuthenticated
+    queryset = Order.objects.prefetch_related(
+        "tickets__trip__train" "tickets__trip__route__station"
+    )
+    serializer_class = OrderSerializer
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            return OrderListSerializer
+
+        return OrderSerializer
+
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+

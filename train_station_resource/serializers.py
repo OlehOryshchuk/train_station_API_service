@@ -142,6 +142,7 @@ class TripListSerializer(TripSerializer):
     class Meta:
         model = Trip
         fields = [
+            "id",
             "crew",
             "route",
             "departure_time",

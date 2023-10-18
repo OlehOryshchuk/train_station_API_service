@@ -1,9 +1,8 @@
 from django.db.models import Count, F
 
-from rest_framework import viewsets, generics, status, mixins
+from rest_framework import viewsets, status, mixins
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from rest_framework.viewsets import GenericViewSet
 
 from .serializers import (
     StationSerializer,
@@ -104,6 +103,15 @@ class TrainViewSet(
         serializer.save()
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class CrewViewSet(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    viewsets.GenericViewSet,
+):
+    queryset = Crew.objects.all()
+    serializer_class = CrewSerializer
 
 
 class TripViewSet(viewsets.ModelViewSet):

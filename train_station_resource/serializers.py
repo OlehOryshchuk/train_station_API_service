@@ -44,3 +44,12 @@ class TrainSerializer(serializers.ModelSerializer):
             "capacity",
         ]
 
+
+class CrewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Crew
+        fields = [
+            "first_name",
+            "last_name",
+            "full_name",
+        ]

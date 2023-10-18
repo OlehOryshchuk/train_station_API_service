@@ -53,3 +53,9 @@ class CrewSerializer(serializers.ModelSerializer):
             "last_name",
             "full_name",
         ]
+
+
+class TripSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Trip
+        fields = "__all__"

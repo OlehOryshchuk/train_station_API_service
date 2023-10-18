@@ -130,6 +130,9 @@ class TripListSerializer(TripSerializer):
     train_name = serializers.CharField(
         sread_only=True, source="train.name"
     )
+    train_capacity = serializers.SlugRelatedField(
+        read_only=True, slug_field="capacity"
+    )
 
     class Meta:
         model = Trip
@@ -139,4 +142,5 @@ class TripListSerializer(TripSerializer):
             "train_name",
             "departure_time",
             "arrival_time",
+            "train_capacity",
         ]

@@ -77,6 +77,10 @@ class Crew(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
 
+    class Meta:
+        verbose_name = "Crew member"
+        verbose_name_plural = "Crew members"
+
     def __str__(self) -> str:
         return self.first_name + " " + self.last_name
 
@@ -86,6 +90,7 @@ class Crew(models.Model):
 
 
 class Trip(models.Model):
+    crew = models.ManyToManyField(Crew)
     route = models.ForeignKey(
         Route,
         related_name="trips",

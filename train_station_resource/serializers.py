@@ -144,8 +144,9 @@ class TripListSerializer(TripSerializer):
         fields = [
             "crew",
             "route",
-            "train_name",
             "departure_time",
             "arrival_time",
+            "train_name",
+            "train_image",
             "train_capacity",
         ]

@@ -130,6 +130,9 @@ class TripListSerializer(TripSerializer):
     train_name = serializers.CharField(
         sread_only=True, source="train.name"
     )
+    train_image = serializers.ImageField(
+        source="train.image", read_only=True,
+    )
     train_capacity = serializers.SlugRelatedField(
         read_only=True, slug_field="capacity"
     )

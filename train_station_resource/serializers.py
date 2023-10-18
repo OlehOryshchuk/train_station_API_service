@@ -71,3 +71,12 @@ class TicketSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ticket
         fields = "__all__"
+
+
+class RouteListSerializer(RouteSerializer):
+    source = serializers.CharField(source="source.name")
+    destination = serializers.CharField(source="destination.name")
+
+    class Meta:
+        model = Route
+        fields = "__all__"

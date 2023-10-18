@@ -87,6 +87,26 @@ class TrainListSerializer(TrainSerializer):
         read_only=True, slug_field="name",
     )
 
+    class Meta:
+        model = Train
+        fields = [
+            "name",
+            "cargo_num",
+            "seats_in_cargo",
+            "train_type",
+            "image",
+        ]
+
 
 class TrainDetailSerialize(TrainSerializer):
     train_type = TrainTypeSerializer(read_only=True)
+
+    class Meta:
+        model = Train
+        fields = [
+            "name",
+            "cargo_num",
+            "seats_in_cargo",
+            "train_type",
+            "image",
+        ]

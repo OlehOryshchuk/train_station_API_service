@@ -157,7 +157,7 @@ class TripListSerializer(TripSerializer):
     )
     route = serializers.StringRelatedField(read_only=True)
     train_name = serializers.CharField(
-        sread_only=True, source="train.name"
+        read_only=True, source="train.name"
     )
     train_image = serializers.ImageField(
         source="train.image", read_only=True,

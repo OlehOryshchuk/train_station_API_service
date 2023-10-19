@@ -140,7 +140,8 @@ REST_FRAMEWORK = {
     ),
     "DEFAULT_PERMISSION_CLASSES": (
         "train_station_resource.permissions.IsAdminOrIfAuthenticatedReadOnly",
-    )
+    ),
+    "DEFAULT_PAGINATION_CLASS": "train_station_resource.paginations.CustomPagination"
 }
 
 SIMPLE_JWT = {

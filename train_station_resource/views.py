@@ -3,6 +3,7 @@ from django.db.models import Count, F
 from rest_framework import viewsets, status, mixins
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
 
 from .serializers import (
     StationSerializer,
@@ -90,7 +91,6 @@ class TrainViewSet(
 
         return TrainSerializer
 
-    # TODO: don't forget to set permission_classes attr
     @action(
         methods=["post"],
         detail=True,
@@ -142,11 +142,11 @@ class OrderViewSet(
     mixins.CreateModelMixin,
     viewsets.GenericViewSet,
 ):
-    # TODO: Set permission_classes IsAuthenticated
     queryset = Order.objects.prefetch_related(
         "tickets__trip__train" "tickets__trip__route__station"
     )
     serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_serializer_class(self):
         if self.action == "list":

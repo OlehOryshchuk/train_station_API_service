@@ -116,7 +116,7 @@ class Trip(models.Model):
         ordering = ["departure_time"]
 
     def __str__(self) -> str:
-        return self.route + " " + self.departure_time
+        return f"{self.route} {self.departure_time}"
 
 
 class Order(models.Model):

@@ -67,7 +67,11 @@ class Train(models.Model):
         related_name="trains",
         on_delete=models.CASCADE,
     )
-    image = models.ImageField(null=True, upload_to=train_image_file_path)
+    image = models.ImageField(
+        null=True,
+        blank=True,
+        upload_to=train_image_file_path,
+    )
 
     @property
     def capacity(self) -> int:

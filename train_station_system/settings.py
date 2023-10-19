@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "train_station_resource",
+    "django_filters",
     "user"
 ]
 

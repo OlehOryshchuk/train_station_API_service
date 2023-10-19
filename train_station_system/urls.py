@@ -21,6 +21,10 @@ from django.conf import settings
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/user/", include("user.urls", namespace="user"))
+    path("api/user/", include("user.urls", namespace="user")),
+    path(
+        "api/train_station/",
+        include("train_station_resource", namespace="train_station")
+    )
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -22,5 +22,5 @@ router.register("orders", OrderViewSet)
 
 urlpatterns = [path(""), include(router.urls)]
 
-app_name = "train_station_resource"
+app_name = "train_station"
 

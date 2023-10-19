@@ -165,8 +165,9 @@ class TripListSerializer(TripSerializer):
     train_capacity = serializers.IntegerField(
         read_only=True, source="train.capacity"
     )
-    # TODO: when i will create TripViewSet i need to create field
-    #  tickets_available using F(train.capacity) - COUNT(tickets)
+    available_tickets = serializers.IntegerField(
+        read_only=True
+    )
 
     class Meta:
         model = Trip
@@ -179,6 +180,7 @@ class TripListSerializer(TripSerializer):
             "train_name",
             "train_image",
             "train_capacity",
+            "available_tickets",
         ]
 
 

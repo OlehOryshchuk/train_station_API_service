@@ -139,7 +139,7 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": (
-        "train_station_resource.permissions.IsAdminOrIfAuthenticatedReadOnly"
+        "train_station_resource.permissions.IsAdminOrIfAuthenticatedReadOnly",
     )
 }
 

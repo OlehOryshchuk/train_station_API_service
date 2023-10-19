@@ -37,7 +37,7 @@ class Route(models.Model):
         """If you want to change the Route string
          representation then you need to be aware of
          serializers.StringRelatedField in TripListSerializer"""
-        return f"{str(self.source)}-{str(self.destination)}"
+        return f"{self.source}-{self.destination}"
 
 
 class TrainType(models.Model):

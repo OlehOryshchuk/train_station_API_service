@@ -202,11 +202,12 @@ class TripDetailSerializer(TripSerializer):
         model = Trip
         fields = [
             "id",
-            "crew",
+            "route",
             "train",
             "taken_places",
             "departure_time",
             "arrival_time",
+            "crew",
         ]
 
 

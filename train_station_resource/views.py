@@ -7,6 +7,13 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.filters import SearchFilter, OrderingFilter
 
+from drf_spectacular.utils import (
+    extend_schema,
+    OpenApiTypes,
+    OpenApiParameter,
+    OpenApiExample,
+)
+
 from .serializers import (
     StationSerializer,
     RouteSerializer,
@@ -109,6 +116,49 @@ class TrainViewSet(
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name="search",
+                description="Search trains by their name",
+                type=str,
+                required=False,
+                examples=[
+                    OpenApiExample(
+                        "Example1",
+                        description="Search by Train1 name",
+                        value="Train1"
+                    ),
+                    OpenApiExample(
+                        "Example2",
+                        description="Search by Train2 name",
+                        value="Train2"
+                    )
+                ]
+            ),
+            OpenApiParameter(
+                name="train_type",
+                description="Filter trains by train type id",
+                type=int,
+                required=False,
+                examples=[
+                    OpenApiExample(
+                        "Example1",
+                        description="Filter trains by id 2",
+                        value=2
+                    ),
+                    OpenApiExample(
+                        "Example2",
+                        description="Filter trains by id 3",
+                        value=3
+                    )
+                ]
+            )
+        ]
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
 
 class CrewViewSet(
     mixins.ListModelMixin,
@@ -132,8 +182,6 @@ class TripViewSet(viewsets.ModelViewSet):
     ))
     serializer_class = TripSerializer
     filter_backends = [DjangoFilterBackend]
-    authentication_classes = []
-    permission_classes = []
     filterset_fields = ["train", "route__source"]
 
     def get_serializer_class(self):
@@ -143,6 +191,49 @@ class TripViewSet(viewsets.ModelViewSet):
             return TripDetailSerializer
 
         return TripSerializer
+
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name="train",
+                description="Filter trips by train id",
+                type=int,
+                required=False,
+                examples=[
+                    OpenApiExample(
+                        "Example1",
+                        description="Filter by train id 1",
+                        value=1
+                    ),
+                    OpenApiExample(
+                        "Example2",
+                        description="Train by train id 2",
+                        value=2
+                    )
+                ]
+            ),
+            OpenApiParameter(
+                name="route__source",
+                description="Filter trips by route source id",
+                type=int,
+                required=False,
+                examples=[
+                    OpenApiExample(
+                        "Example1",
+                        description="Filter by route source id 1",
+                        value=1
+                    ),
+                    OpenApiExample(
+                        "Example2",
+                        description="Filter by route source id 2",
+                        value=2
+                    )
+                ]
+            )
+        ]
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
 
 
 class OrderViewSet(
@@ -171,3 +262,45 @@ class OrderViewSet(
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name="tickets__trip__route",
+                description=(
+                    "Filter orders by tickets trip route id"
+                ),
+                type=int,
+                required=False,
+                examples=[
+                    OpenApiExample(
+                        "Example1",
+                        description="Enter route id",
+                        value=1
+                    )
+                ]
+            ),
+            OpenApiParameter(
+                name="ordering",
+                description=(
+                    "Ordering orders in ascending & descending order"
+                    " default is descending"
+                ),
+                required=False,
+                type=str,
+                examples=[
+                    OpenApiExample(
+                        "Example1",
+                        description="Filtering in ascending order",
+                        value="created_at"
+                    ),
+                    OpenApiExample(
+                        "Example2",
+                        description="Filtering in descending order",
+                        value="-created_at"
+                    )
+                ]
+            )
+        ]
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)

@@ -1,9 +1,11 @@
 from django.db.models import Count, F
+from django_filters.rest_framework import DjangoFilterBackend
 
 from rest_framework import viewsets, status, mixins
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.filters import SearchFilter, OrderingFilter
 
 from .serializers import (
     StationSerializer,
@@ -78,6 +80,9 @@ class TrainViewSet(
         "train_type"
     )
     serializer_class = TrainSerializer
+    filter_backends = [SearchFilter, DjangoFilterBackend]
+    search_fields = ["name"]
+    filterset_fields = ["   train_type"]
 
     def get_serializer_class(self):
         if self.action == "list":
@@ -118,7 +123,6 @@ class TripViewSet(viewsets.ModelViewSet):
     queryset = Trip.objects.select_related(
         "train",
         "route__source",
-        "route__destination",
         "train__train_type",
     ).prefetch_related(
         "crew", "tickets"
@@ -127,6 +131,10 @@ class TripViewSet(viewsets.ModelViewSet):
         - Count("tickets")
     ))
     serializer_class = TripSerializer
+    filter_backends = [DjangoFilterBackend]
+    authentication_classes = []
+    permission_classes = []
+    filterset_fields = ["train", "route__source"]
 
     def get_serializer_class(self):
         if self.action == "list":
@@ -147,6 +155,8 @@ class OrderViewSet(
     )
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["tickets__trip__route"]
 
     def get_serializer_class(self):
         if self.action == "list":

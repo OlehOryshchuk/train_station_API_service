@@ -155,8 +155,9 @@ class OrderViewSet(
     )
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_fields = ["tickets__trip__route"]
+    ordering_fields = ["created_at"]
 
     def get_serializer_class(self):
         if self.action == "list":

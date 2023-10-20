@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "drf-spectacular",
+    "drf_spectacular",
     "rest_framework",
     "train_station_resource",
     "django_filters",
@@ -150,7 +150,7 @@ REST_FRAMEWORK = {
     "DEFAULT_THROTTLE_RATES": {
         "user": "1222/day"
     },
-    "DEFAULT_SCHEMA_CLASS": "drf-spectacular.openapi.AutoSchema"
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema"
 }
 
 SIMPLE_JWT = {
@@ -159,7 +159,7 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": False,
 }
 
-# Set drf-spectacular settings
+# Set drf_spectacular settings
 SPECTACULAR_SETTINGS = {
     "TITLE": "Train Station API",
     "DESCRIPTION": "Order tickets on trips with different type of trains",

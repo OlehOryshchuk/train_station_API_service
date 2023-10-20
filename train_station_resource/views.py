@@ -82,7 +82,7 @@ class TrainViewSet(
     serializer_class = TrainSerializer
     filter_backends = [SearchFilter, DjangoFilterBackend]
     search_fields = ["name"]
-    filterset_fields = ["   train_type"]
+    filterset_fields = ["train_type"]
 
     def get_serializer_class(self):
         if self.action == "list":

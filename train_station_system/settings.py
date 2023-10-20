@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "drf-spectacular",
     "rest_framework",
     "train_station_resource",
     "django_filters",

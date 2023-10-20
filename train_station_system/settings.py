@@ -149,7 +149,8 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_THROTTLE_RATES": {
         "user": "1222/day"
-    }
+    },
+    "DEFAULT_SCHEMA_CLASS": "drf-spectacular.openapi.AutoSchema"
 }
 
 SIMPLE_JWT = {

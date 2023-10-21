@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from train_station_resource.models import (
     Station,
@@ -56,7 +56,6 @@ def sample_trip(**param) -> Trip:
     station2 = sample_station(name="MainStation2")
 
     default = {
-        "crew": sample_crew(),
         "route": sample_route(station1, station2),
         "train": sample_train(name="MainTrain"),
         "departure_time": datetime.today(),
@@ -65,4 +64,4 @@ def sample_trip(**param) -> Trip:
 
     default.update(**param)
 
-    return Trip.objects.create(**param)
+    return Trip.objects.create(**default)

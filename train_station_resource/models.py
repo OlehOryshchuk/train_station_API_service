@@ -45,6 +45,11 @@ class TrainType(models.Model):
     name = models.CharField(unique=True, max_length=150)
     description = models.TextField(null=True)
 
+    class Meta:
+        indexes = [
+            models.Index(fields=["name"])
+        ]
+
     def __str__(self) -> str:
         return self.name
 

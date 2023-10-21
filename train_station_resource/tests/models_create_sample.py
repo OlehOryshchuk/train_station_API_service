@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from train_station_resource.models import (
     Station,
     Route,
@@ -38,7 +40,7 @@ def sample_train(name: str, **param) -> Train:
     return Train.objects.create(**default)
 
 
-def sample_crew(**param) -> Train:
+def sample_crew(**param) -> Crew:
     default = {
         "first_name": "MainFirst",
         "last_name": "MainLast",
@@ -47,3 +49,20 @@ def sample_crew(**param) -> Train:
     default.update(**param)
 
     return Crew.objects.create(**default)
+
+
+def sample_trip(**param) -> Trip:
+    station1 = sample_station(name="MainStation1")
+    station2 = sample_station(name="MainStation2")
+
+    default = {
+        "crew": sample_crew(),
+        "route": sample_route(station1, station2),
+        "train": sample_train(name="MainTrain"),
+        "departure_time": datetime.today(),
+        "arrival_time": datetime.today()
+    }
+
+    default.update(**param)
+
+    return Trip.objects.create(**param)

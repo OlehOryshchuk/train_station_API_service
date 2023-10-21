@@ -1,8 +1,7 @@
 from django.test import TestCase
 from django.db import IntegrityError
 from django.core.exceptions import ValidationError
-
-from datetime import datetime
+from django.contrib.auth import get_user_model
 
 from train_station_resource.models import (
     Station,
@@ -21,6 +20,7 @@ from .models_create_sample import (
     sample_train,
     sample_crew,
     sample_trip,
+    sample_order,
 )
 
 
@@ -112,3 +112,24 @@ class ModelsTest(TestCase):
     def test_trip_index_source(self):
         indexes = Trip._meta.indexes
         self.assertEqual(indexes[0].fields[0], "route")
+
+    def test_order_string_representation(self):
+        user = get_user_model().objects.create(
+            email="main_user@gmail.com", password="Mainpassword123"
+        )
+        order = sample_order(user=user)
+
+        self.assertEqual(str(order), f"{order.created_at}")
+
+    def test_order_model_in_descending_order(self):
+        user = get_user_model().objects.create(
+            email="main_user@gmail.com", password="Mainpassword123"
+        )
+        order1 = sample_order(user=user)
+        sample_order(user=user)
+        order3 = sample_order(user=user)
+
+        orders = Order.objects.all()
+
+        self.assertEqual(orders.first(), order3)
+        self.assertEqual(orders.last(), order1)

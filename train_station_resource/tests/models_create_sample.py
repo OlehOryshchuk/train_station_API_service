@@ -24,9 +24,9 @@ def sample_train_type(name: str) -> TrainType:
     return TrainType.objects.create(name=name)
 
 
-def sample_train(**param) -> Train:
+def sample_train(name: str, **param) -> Train:
     default = {
-        "name": "Main",
+        "name": name,
         "cargo_num": 5,
         "seats_in_cargo": 5,
         "train_type": sample_train_type(name="MainTrainType"),

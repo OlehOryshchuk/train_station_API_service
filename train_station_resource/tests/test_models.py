@@ -20,6 +20,7 @@ from .models_create_sample import (
     sample_train_type,
     sample_train,
     sample_crew,
+    sample_trip,
 )
 
 
@@ -101,3 +102,13 @@ class ModelsTest(TestCase):
         expect = f"{crew_member.first_name} {crew_member.last_name}"
 
         self.assertEqual(crew_member.full_name, expect)
+
+    def test_trip_string_representation(self):
+        trip = sample_trip()
+        expect = f"{trip.route} {trip.departure_time}"
+
+        self.assertEqual(str(trip), expect)
+
+    def test_trip_index_source(self):
+        indexes = Trip._meta.indexes
+        self.assertEqual(indexes[0].fields[0], "route")

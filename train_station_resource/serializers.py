@@ -155,7 +155,9 @@ class TripListSerializer(TripSerializer):
     crew = serializers.SlugRelatedField(
         many=True, read_only=True, slug_field="full_name"
     )
-    route = serializers.StringRelatedField(read_only=True)
+    route = serializers.SlugRelatedField(
+        read_only=True, slug_field="string_repr"
+    )
     train_name = serializers.CharField(
         read_only=True, source="train.name"
     )

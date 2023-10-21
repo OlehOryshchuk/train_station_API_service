@@ -33,11 +33,9 @@ class Route(models.Model):
         unique_together = ["source", "destination"]
         ordering = ["source", "destination"]
 
-    def __str__(self) -> str:
-        """If you want to change the Route string
-         representation then you need to be aware of
-         serializers.StringRelatedField in TripListSerializer"""
-        return f"{self.source}-{self.destination}"
+    @property
+    def string_repr(self) -> str:
+        return f"{self.source} - {self.destination}"
 
 
 class TrainType(models.Model):

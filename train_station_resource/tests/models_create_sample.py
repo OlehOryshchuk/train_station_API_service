@@ -1,4 +1,5 @@
-from datetime import datetime, timedelta
+from datetime import datetime
+from django.contrib.auth import get_user_model
 
 from train_station_resource.models import (
     Station,
@@ -65,3 +66,13 @@ def sample_trip(**param) -> Trip:
     default.update(**param)
 
     return Trip.objects.create(**default)
+
+
+def sample_order(user: get_user_model(), **param) -> Order:
+    default = {
+        "user": user
+    }
+
+    default.update(**param)
+
+    return Order.objects.create(**default)

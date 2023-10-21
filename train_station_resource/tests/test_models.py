@@ -26,6 +26,10 @@ def sample_route(source: Station, destination: Station) -> Route:
     )
 
 
+def sample_train_type(name: str) -> TrainType:
+    return TrainType.objects.create(name=name)
+
+
 class ModelsTest(TestCase):
     def test_station_string_representation(self):
         station = sample_station(name="Station1")
@@ -62,3 +66,15 @@ class ModelsTest(TestCase):
         indexes = Route._meta.indexes
         self.assertEqual(indexes[0].fields[0], "source")
 
+    def test_train_type_string_representation(self):
+        train_type = sample_train_type(name="TrainType1")
+        self.assertEqual(str(train_type), train_type.name)
+
+    def test_train_type_name_uniqueness(self):
+        sample_train_type(name="TrainType1")
+        with self.assertRaises(IntegrityError):
+            sample_train_type(name="TrainType1")
+
+    def test_train_type_index_source(self):
+        indexes = TrainType._meta.indexes
+        self.assertEqual(indexes[0].fields[0], "name")

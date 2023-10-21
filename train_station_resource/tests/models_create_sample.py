@@ -36,3 +36,14 @@ def sample_train(name: str, **param) -> Train:
     default.update(**param)
 
     return Train.objects.create(**default)
+
+
+def sample_crew(**param) -> Train:
+    default = {
+        "first_name": "MainFirst",
+        "last_name": "MainLast",
+    }
+
+    default.update(**param)
+
+    return Crew.objects.create(**default)

@@ -112,6 +112,10 @@ class Trip(models.Model):
 
     class Meta:
         ordering = ["departure_time"]
+        indexes = [
+            models.Index(fields="route"),
+            models.Index(fields="route__source"),
+        ]
 
     def __str__(self) -> str:
         return f"{self.route} {self.departure_time}"

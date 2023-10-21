@@ -1,3 +1,5 @@
+import time
+
 from django.test import TestCase
 from django.db import IntegrityError
 from django.core.exceptions import ValidationError
@@ -106,7 +108,7 @@ class ModelsTest(TestCase):
     def test_trip_string_representation(self):
         trip = sample_trip()
         expect = f"{trip.route} {trip.departure_time}"
-
+        print(str(trip.route))
         self.assertEqual(str(trip), expect)
 
     def test_trip_index_source(self):
@@ -126,7 +128,9 @@ class ModelsTest(TestCase):
             email="main_user@gmail.com", password="Mainpassword123"
         )
         order1 = sample_order(user=user)
+        time.sleep(1)
         sample_order(user=user)
+        time.sleep(1)
         order3 = sample_order(user=user)
 
         orders = Order.objects.all()

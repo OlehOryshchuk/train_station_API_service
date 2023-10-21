@@ -173,9 +173,9 @@ class TripViewSet(viewsets.ModelViewSet):
     queryset = Trip.objects.select_related(
         "train",
         "route__source",
-        "train__train_type",
+        "route__destination",
     ).prefetch_related(
-        "crew", "tickets"
+        "crew"
     ).annotate(available_tickets=(
         F("train__cargo_num") * F("train__seats_in_cargo")
         - Count("tickets")
@@ -242,8 +242,8 @@ class OrderViewSet(
     viewsets.GenericViewSet,
 ):
     queryset = Order.objects.prefetch_related(
-        "tickets__trip__train" "tickets__trip__route__station"
-    )
+        "tickets__trip__train" "tickets__trip__route__source"
+    ).select_related("user")
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend, OrderingFilter]

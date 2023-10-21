@@ -88,3 +88,5 @@ def sample_ticket(user: get_user_model(), **param) -> Ticket:
     }
 
     default.update(**param)
+
+    return Ticket.objects.create(**default)

@@ -19,6 +19,7 @@ from .models_create_sample import (
     sample_station,
     sample_train_type,
     sample_train,
+    sample_crew,
 )
 
 
@@ -88,3 +89,15 @@ class ModelsTest(TestCase):
         )
 
         self.assertEqual(train.capacity, 100)
+
+    def test_crew_string_representation(self):
+        crew_member = sample_crew(first_name="Joe", last_name="Biden")
+        expect = f"{crew_member.first_name} {crew_member.last_name}"
+
+        self.assertEqual(str(crew_member), expect)
+
+    def test_crew_full_name_capacity(self):
+        crew_member = sample_crew(first_name="Joe", last_name="Biden")
+        expect = f"{crew_member.first_name} {crew_member.last_name}"
+
+        self.assertEqual(crew_member.full_name, expect)

@@ -241,9 +241,7 @@ class OrderViewSet(
     mixins.CreateModelMixin,
     viewsets.GenericViewSet,
 ):
-    queryset = Order.objects.prefetch_related(
-        "tickets__trip__train" "tickets__trip__route__source"
-    ).select_related("user")
+    queryset = Order.objects.all()
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend, OrderingFilter]
@@ -257,7 +255,13 @@ class OrderViewSet(
         return OrderSerializer
 
     def get_queryset(self):
-        return Order.objects.filter(user=self.request.user)
+        return Order.objects.prefetch_related(
+            "tickets__trip__route__source",
+            "tickets__trip__crew",
+            "tickets__trip__train",
+        ).filter(
+            user=self.request.user
+        )
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

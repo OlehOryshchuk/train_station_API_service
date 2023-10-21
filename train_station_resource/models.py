@@ -32,6 +32,9 @@ class Route(models.Model):
     class Meta:
         unique_together = ["source", "destination"]
         ordering = ["source", "destination"]
+        indexes = [
+            models.Index(fields=["source"])
+        ]
 
     @property
     def string_repr(self) -> str:
@@ -113,8 +116,7 @@ class Trip(models.Model):
     class Meta:
         ordering = ["departure_time"]
         indexes = [
-            models.Index(fields="route"),
-            models.Index(fields="route__source"),
+            models.Index(fields=["route"])
         ]
 
     def __str__(self) -> str:

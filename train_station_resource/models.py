@@ -36,6 +36,31 @@ class Route(models.Model):
             models.Index(fields=["source"])
         ]
 
+    def clean(self):
+        if self.source == self.destination:
+            raise ValidationError(
+                {
+                    "source_destination": (
+                        "Source and destination cannot be the same."
+                    )
+                }
+            )
+
+    def save(
+        self,
+            force_insert=False,
+            force_update=False,
+            using=None,
+            update_fields=None
+    ):
+        self.full_clean()
+        return super().save(
+            force_insert,
+            force_update,
+            using,
+            update_fields
+        )
+
     @property
     def string_repr(self) -> str:
         return f"{self.source} - {self.destination}"

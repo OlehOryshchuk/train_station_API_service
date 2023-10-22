@@ -15,6 +15,7 @@ from .models import (
 @admin.register(Station)
 class StationAdmin(admin.ModelAdmin):
     search_fields = ["name"]
+    list_display = ["name", "longitude", "latitude"]
 
 
 @admin.register(Route)

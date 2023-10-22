@@ -20,8 +20,7 @@ class StationAdmin(admin.ModelAdmin):
 
 @admin.register(Route)
 class RouteAdmin(admin.ModelAdmin):
-    search_fields = ["source"]
-    list_filter = ["distance"]
+    search_fields = ["source__name"]
     list_display = ["source", "destination", "distance"]
 
 

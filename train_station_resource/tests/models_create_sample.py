@@ -12,8 +12,15 @@ from train_station_resource.models import (
 )
 
 
-def sample_station(name: str) -> Station:
-    return Station.objects.create(longitude=50, latitude=50, name=name)
+def sample_station(name: str, **param) -> Station:
+    default = {
+        "longitude": 50,
+        "latitude": 50,
+        "name": name,
+    }
+    default.update(**param)
+
+    return Station.objects.create(**default)
 
 
 def sample_route(source: Station, destination: Station) -> Route:

@@ -48,7 +48,7 @@ class CrewAdmin(admin.ModelAdmin):
 
 @admin.register(Trip)
 class TripAdmin(admin.ModelAdmin):
-    search_fields = ["route__source", "route__destination"]
+    search_fields = ["route__source__name"]
     list_filter = ["train__train_type"]
     list_display = [
         "display_route_string_repr",

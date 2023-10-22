@@ -78,15 +78,3 @@ def sample_order(user: get_user_model(), **param) -> Order:
     return Order.objects.create(**default)
 
 
-def sample_ticket(user: get_user_model(), **param) -> Ticket:
-
-    default = {
-        "cargo": 1,
-        "seat": 1,
-        "trip": sample_trip(),
-        "order": sample_order(user=user)
-    }
-
-    default.update(**param)
-
-    return Ticket.objects.create(**default)

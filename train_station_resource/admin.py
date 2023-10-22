@@ -83,10 +83,10 @@ class TicketAdmin(admin.ModelAdmin):
     search_fields = ["order__user"]
     list_filter = ["trip"]
     list_display = [
+        "trip",
+        "order",
         "cargo",
         "seat",
-        "trip",
-        "order"
     ]
 
     def display_route_string_repr(self, obj):

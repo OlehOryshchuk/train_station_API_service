@@ -103,9 +103,9 @@ class ModelsTest(TestCase):
         self.assertEqual(crew_member.full_name, expect)
 
     def test_trip_string_representation(self):
-        trip = sample_trip(train=sample_train(name="Trian1"))
-        expect = f"{trip.route} {trip.departure_time}"
-        print(str(trip.route))
+        trip = sample_trip(name="Trian1")
+        expect = f"{trip.route.string_repr}"
+
         self.assertEqual(str(trip), expect)
 
     def test_trip_index_source(self):
@@ -139,7 +139,7 @@ class ModelsTest(TestCase):
         user = get_user_model().objects.create(
             email="main_user@gmail.com", password="Mainpassword123"
         )
-        trip = sample_trip(train=sample_train(name="Train1"))
+        trip = sample_trip(name="Train1")
         ticket = Ticket.objects.create(
             cargo=1, seat=1, trip=trip, order=sample_order(user=user)
         )
@@ -153,7 +153,7 @@ class ModelsTest(TestCase):
         train = sample_train(
             name="Train1", cargo_num=5, seats_in_cargo=5, train_type=train_type
         )
-        trip = sample_trip(train=train)
+        trip = sample_trip(train=train, name="test")
         user = get_user_model().objects.create(
             email="ticket@gmail.com", password="rvtqrey"
         )
@@ -168,7 +168,7 @@ class ModelsTest(TestCase):
         train = sample_train(
             name="Train1", cargo_num=5, seats_in_cargo=5, train_type=train_type
         )
-        trip = sample_trip(train=train)
+        trip = sample_trip(train=train, name="test")
         user = get_user_model().objects.create(
             email="ticket@gmail.com", password="rvtqrey"
         )
@@ -183,13 +183,14 @@ class ModelsTest(TestCase):
         train = sample_train(
             name="Train1", cargo_num=5, seats_in_cargo=5, train_type=train_type
         )
-        trip = sample_trip(train=train)
+        trip = sample_trip(train=train, name="test")
         user = get_user_model().objects.create(
             email="ticket@gmail.com", password="rvtqrey"
         )
         Ticket.objects.create(
             cargo=5, seat=5, trip=trip, order=sample_order(user=user)
         )
+
         with self.assertRaises(ValidationError):
             Ticket.objects.create(
                 cargo=5, seat=5, trip=trip, order=sample_order(user=user)

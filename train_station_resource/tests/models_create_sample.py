@@ -58,13 +58,13 @@ def sample_crew(**param) -> Crew:
     return Crew.objects.create(**default)
 
 
-def sample_trip(train: Train, **param) -> Trip:
-    station1 = sample_station(name="MainStation1")
-    station2 = sample_station(name="MainStation2")
+def sample_trip(name: str, **param) -> Trip:
+    station1 = sample_station(name=name)
+    station2 = sample_station(name=name)
 
     default = {
         "route": sample_route(station1, station2),
-        "train": train,
+        "train": sample_train(name=name),
         "departure_time": datetime.today(),
         "arrival_time": datetime.today()
     }

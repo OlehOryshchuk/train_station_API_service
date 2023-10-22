@@ -150,7 +150,7 @@ class Trip(models.Model):
         ]
 
     def __str__(self) -> str:
-        return f"{self.route} {self.departure_time}"
+        return f"{self.route.string_repr}"
 
 
 class Order(models.Model):

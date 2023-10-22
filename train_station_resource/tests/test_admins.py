@@ -7,6 +7,7 @@ from .models_create_sample import(
     sample_route,
     sample_train_type,
     sample_train,
+    sample_crew,
 )
 
 
@@ -176,3 +177,43 @@ class AdminTest(TestCase):
         changelist = res.context["cl"]
         self.assertIn(train1, changelist.queryset)
         self.assertNotIn(train2, changelist.queryset)
+
+    def test_crew_admin_has_require_field(self):
+        crew_member = sample_crew(
+            first_name="Mike", last_name="Tyson"
+        )
+
+        url = reverse(
+            "admin:train_station_resource_crew_changelist"
+        )
+
+        res = self.client.get(url)
+
+        self.assertContains(res, str(crew_member))
+
+    def test_admin_crew_search_by_first_name_and_last_name(self):
+        crew_member1 = sample_crew(
+            first_name="First1", last_name="Last1"
+        )
+        crew_member2 = sample_crew(
+            first_name="First2", last_name="Last2"
+        )
+
+        url = reverse(
+            "admin:train_station_resource_crew_changelist"
+        )
+
+        res1 = self.client.get(
+            url, {"q": crew_member1.first_name.lower()}
+        )
+        res2 = self.client.get(
+            url, {"q": crew_member1.last_name.lower()}
+        )
+
+        changelist1 = res1.context["cl"]
+        self.assertIn(crew_member1, changelist1.queryset)
+        self.assertNotIn(crew_member2, changelist1.queryset)
+
+        changelist2 = res2.context["cl"]
+        self.assertIn(crew_member1, changelist2.queryset)
+        self.assertNotIn(crew_member2, changelist2.queryset)

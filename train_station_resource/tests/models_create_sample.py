@@ -38,7 +38,7 @@ def sample_train(name: str, **param) -> Train:
         "name": name,
         "cargo_num": 5,
         "seats_in_cargo": 5,
-        "train_type": sample_train_type(name="MainTrainType"),
+        "train_type": sample_train_type(name=name),
         "image": None
     }
 

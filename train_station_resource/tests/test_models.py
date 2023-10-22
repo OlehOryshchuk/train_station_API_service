@@ -6,11 +6,8 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 
 from train_station_resource.models import (
-    Station,
     Route,
     TrainType,
-    Crew,
-    Train,
     Trip,
     Order,
     Ticket,

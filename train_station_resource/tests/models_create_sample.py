@@ -9,7 +9,6 @@ from train_station_resource.models import (
     Train,
     Trip,
     Order,
-    Ticket,
 )
 
 
@@ -76,5 +75,3 @@ def sample_order(user: get_user_model(), **param) -> Order:
     default.update(**param)
 
     return Order.objects.create(**default)
-
-

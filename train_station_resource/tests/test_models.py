@@ -106,7 +106,7 @@ class ModelsTest(TestCase):
         self.assertEqual(crew_member.full_name, expect)
 
     def test_trip_string_representation(self):
-        trip = sample_trip()
+        trip = sample_trip(train=sample_train(name="Trian1"))
         expect = f"{trip.route} {trip.departure_time}"
         print(str(trip.route))
         self.assertEqual(str(trip), expect)
@@ -137,3 +137,63 @@ class ModelsTest(TestCase):
 
         self.assertEqual(orders.first(), order3)
         self.assertEqual(orders.last(), order1)
+
+    def test_ticket_string_representation(self):
+        user = get_user_model().objects.create(
+            email="main_user@gmail.com", password="Mainpassword123"
+        )
+        trip = sample_trip(train=sample_train(name="Train1"))
+        ticket = Ticket.objects.create(
+            cargo=1, seat=1, trip=trip, order=sample_order(user=user)
+        )
+
+        expect = f"{ticket.trip} (cargo: {ticket.cargo}, seat: {ticket.seat})"
+
+        self.assertEqual(str(ticket), expect)
+
+    def test_validate_ticket_method_where_invalid_cargo(self):
+        train_type = sample_train_type(name="TrainType1")
+        train = sample_train(
+            name="Train1", cargo_num=5, seats_in_cargo=5, train_type=train_type
+        )
+        trip = sample_trip(train=train)
+        user = get_user_model().objects.create(
+            email="ticket@gmail.com", password="rvtqrey"
+        )
+
+        with self.assertRaises(ValidationError):
+            Ticket.objects.create(
+                cargo=6, seat=5, trip=trip, order=sample_order(user=user)
+            )
+
+    def test_validate_ticket_method_where_invalid_seat(self):
+        train_type = sample_train_type(name="TrainType1")
+        train = sample_train(
+            name="Train1", cargo_num=5, seats_in_cargo=5, train_type=train_type
+        )
+        trip = sample_trip(train=train)
+        user = get_user_model().objects.create(
+            email="ticket@gmail.com", password="rvtqrey"
+        )
+
+        with self.assertRaises(ValidationError):
+            Ticket.objects.create(
+                cargo=5, seat=6, trip=trip, order=sample_order(user=user)
+            )
+
+    def test_ticket_cargo_seat_trip_field_uniqueness(self):
+        train_type = sample_train_type(name="TrainType1")
+        train = sample_train(
+            name="Train1", cargo_num=5, seats_in_cargo=5, train_type=train_type
+        )
+        trip = sample_trip(train=train)
+        user = get_user_model().objects.create(
+            email="ticket@gmail.com", password="rvtqrey"
+        )
+        Ticket.objects.create(
+            cargo=5, seat=5, trip=trip, order=sample_order(user=user)
+        )
+        with self.assertRaises(ValidationError):
+            Ticket.objects.create(
+                cargo=5, seat=5, trip=trip, order=sample_order(user=user)
+            )

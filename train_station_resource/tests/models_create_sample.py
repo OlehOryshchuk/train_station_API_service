@@ -60,7 +60,7 @@ def sample_crew(**param) -> Crew:
 
 def sample_trip(name: str, **param) -> Trip:
     station1 = sample_station(name=name)
-    station2 = sample_station(name=name)
+    station2 = sample_station(name=name + name)
 
     default = {
         "route": sample_route(station1, station2),

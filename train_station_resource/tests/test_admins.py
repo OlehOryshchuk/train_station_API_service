@@ -6,6 +6,7 @@ from .models_create_sample import(
     sample_station,
     sample_route,
     sample_train_type,
+    sample_train,
 )
 
 
@@ -103,3 +104,75 @@ class AdminTest(TestCase):
         changelist = res.context["cl"]
         self.assertIn(train_type1, changelist.queryset)
         self.assertNotIn(train_type2, changelist.queryset)
+
+    def test_trip_admin_has_require_field(self):
+        train = sample_train(name="Train1")
+
+        url = reverse(
+            "admin:train_station_resource_train_changelist"
+        )
+
+        res = self.client.get(url)
+
+        self.assertContains(res, train.name)
+        self.assertContains(res, train.cargo_num)
+        self.assertContains(res, train.seats_in_cargo)
+        self.assertContains(res, train.train_type)
+
+    def test_admin_train_search_by_name(self):
+        train1 = sample_train(name="Train1")
+        train2 = sample_train(name="Train2")
+
+        url = reverse(
+            "admin:train_station_resource_train_changelist"
+        )
+
+        res = self.client.get(url, {"q": train1.name.lower()})
+
+        changelist = res.context["cl"]
+        self.assertIn(train1, changelist.queryset)
+        self.assertNotIn(train2, changelist.queryset)
+
+    def test_admin_train_search_by_train_type_name(self):
+        train_type1 = sample_train_type(name="TrainType1")
+        train_type2 = sample_train_type(name="TrainType2")
+        train1 = sample_train(name="Train1", train_type=train_type1)
+        train2 = sample_train(name="Train2", train_type=train_type2)
+
+        url = reverse(
+            "admin:train_station_resource_train_changelist"
+        )
+
+        res = self.client.get(url, {"q": train_type1.name.lower()})
+
+        changelist = res.context["cl"]
+        self.assertIn(train1, changelist.queryset)
+        self.assertNotIn(train2, changelist.queryset)
+
+    def test_admin_train_filter_by_cargo_num(self):
+        train1 = sample_train(name="Train1", cargo_num=10)
+        train2 = sample_train(name="Train2", cargo_num=15)
+
+        url = reverse(
+            "admin:train_station_resource_train_changelist"
+        )
+
+        res = self.client.get(url, {"cargo_num": train1.cargo_num})
+
+        changelist = res.context["cl"]
+        self.assertIn(train1, changelist.queryset)
+        self.assertNotIn(train2, changelist.queryset)
+
+    def test_admin_train_filter_by_seats_in_cargo(self):
+        train1 = sample_train(name="Train1", seats_in_cargo=10)
+        train2 = sample_train(name="Train2", seats_in_cargo=15)
+
+        url = reverse(
+            "admin:train_station_resource_train_changelist"
+        )
+
+        res = self.client.get(url, {"seats_in_cargo": train1.seats_in_cargo})
+
+        changelist = res.context["cl"]
+        self.assertIn(train1, changelist.queryset)
+        self.assertNotIn(train2, changelist.queryset)

@@ -5,6 +5,7 @@ from django.urls import reverse
 from .models_create_sample import(
     sample_station,
     sample_route,
+    sample_train_type,
 )
 
 
@@ -58,7 +59,7 @@ class AdminTest(TestCase):
         self.assertContains(res, route1.destination),
         self.assertContains(res, route1.distance),
 
-    def test_admin_route_search_by_name_and_(self):
+    def test_admin_route_search_by_source(self):
         station1 = sample_station(name="MainStation")
         station2 = sample_station(name="SecondStation")
         route1 = sample_route(station1, station2)
@@ -77,3 +78,28 @@ class AdminTest(TestCase):
         self.assertNotIn(
             route2, changelist.queryset
         )
+
+    def test_trip_type_admin_has_require_field(self):
+        train_type = sample_train_type(name="TrainType1")
+
+        url = reverse(
+            "admin:train_station_resource_traintype_changelist"
+        )
+
+        res = self.client.get(url)
+
+        self.assertContains(res, str(train_type))
+
+    def test_admin_train_type_search_by_name(self):
+        train_type1 = sample_train_type(name="TrainType1")
+        train_type2 = sample_train_type(name="TrainType2")
+
+        url = reverse(
+            "admin:train_station_resource_traintype_changelist"
+        )
+
+        res = self.client.get(url, {"q": train_type1.name.lower()})
+
+        changelist = res.context["cl"]
+        self.assertIn(train_type1, changelist.queryset)
+        self.assertNotIn(train_type2, changelist.queryset)

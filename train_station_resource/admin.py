@@ -77,18 +77,4 @@ class OrderAdmin(admin.ModelAdmin):
     ]
 
 
-@admin.register(Ticket)
-class TicketAdmin(admin.ModelAdmin):
-    search_fields = ["order__user"]
-    list_filter = ["trip"]
-    list_display = [
-        "trip",
-        "order",
-        "cargo",
-        "seat",
-    ]
-
-    def display_route_string_repr(self, obj):
-        return obj.route.string_repr  # Reference the property
-
-    display_route_string_repr.short_description = "Route"  # Customize the column header
+admin.site.register(Ticket)

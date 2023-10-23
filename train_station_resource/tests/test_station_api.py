@@ -41,4 +41,7 @@ class AuthenticatedStationApiTests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data["results"], serializers.data)
 
+    def test_create_station_forbidden(self):
+        res = self.client.post(STATION_URL)
 
+        self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)

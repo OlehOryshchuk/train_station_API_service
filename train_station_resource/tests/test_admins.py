@@ -9,8 +9,9 @@ from .models_create_sample import(
     sample_train,
     sample_crew,
     sample_trip,
+    sample_order,
 )
-from train_station_resource.admin import TripAdmin
+from train_station_resource.admin import TripAdmin, OrderAdmin
 
 
 class AdminTest(TestCase):
@@ -269,3 +270,38 @@ class AdminTest(TestCase):
 
         self.assertIn(trip1, changelist.queryset)
         self.assertNotIn(trip2, changelist.queryset)
+
+    def test_order_admin_has_require_field(self):
+        user = get_user_model().objects.create(
+            email="user@gmail.com", password="rvrtgga"
+        )
+        order = sample_order(user=user)
+
+        url = reverse(
+            "admin:train_station_resource_order_changelist"
+        )
+
+        res = self.client.get(url)
+
+        self.assertContains(res, order.user.email)
+        self.assertIn("created_at", OrderAdmin.list_display)
+
+    def test_order_admin_search_by_user_email(self):
+        user1 = get_user_model().objects.create(
+            email="user1@gmail.com", password="rvrtgga1"
+        )
+        user2 = get_user_model().objects.create(
+            email="user2@gmail.com", password="rvrtgga2"
+        )
+        order1 = sample_order(user=user1)
+        order2 = sample_order(user=user2)
+
+        url = reverse(
+            "admin:train_station_resource_order_changelist"
+        )
+
+        res = self.client.get(url, {"q": user1.email})
+
+        changelist = res.context["cl"]
+        self.assertIn(order1, changelist.queryset)
+        self.assertNotIn(order2, changelist.queryset)

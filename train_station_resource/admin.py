@@ -76,5 +76,14 @@ class OrderAdmin(admin.ModelAdmin):
         "user", "created_at"
     ]
 
+    def save_model(self, request, obj, form, change):
+        obj.save()
+        if not obj.tickets.all():
+            self.message_user(
+                request,
+                "An order need to have at least 1 ticket",
+                level=30
+            )
+
 
 admin.site.register(Ticket)

@@ -8,7 +8,9 @@ from .models_create_sample import(
     sample_train_type,
     sample_train,
     sample_crew,
+    sample_trip,
 )
+from train_station_resource.admin import TripAdmin
 
 
 class AdminTest(TestCase):
@@ -106,7 +108,7 @@ class AdminTest(TestCase):
         self.assertIn(train_type1, changelist.queryset)
         self.assertNotIn(train_type2, changelist.queryset)
 
-    def test_trip_admin_has_require_field(self):
+    def test_train_admin_has_require_field(self):
         train = sample_train(name="Train1")
 
         url = reverse(
@@ -217,3 +219,53 @@ class AdminTest(TestCase):
         changelist2 = res2.context["cl"]
         self.assertIn(crew_member1, changelist2.queryset)
         self.assertNotIn(crew_member2, changelist2.queryset)
+
+    def test_trip_admin_has_require_field(self):
+        trip = sample_trip(name="Trip1")
+
+        url = reverse(
+            "admin:train_station_resource_trip_changelist"
+        )
+
+        res = self.client.get(url)
+
+        self.assertContains(res, trip.route.string_repr)
+        self.assertContains(res, trip.train)
+        self.assertIn("departure_time", TripAdmin.list_display)
+        self.assertIn("arrival_time", TripAdmin.list_display)
+
+    def test_admin_trip_search_by_route_source_name(self):
+        trip1 = sample_trip(name="Trip1")
+        trip2 = sample_trip(name="Trip2")
+
+        url = reverse(
+            "admin:train_station_resource_trip_changelist"
+        )
+
+        res = self.client.get(
+            url, {"q": trip1.route.source.name.lower()}
+        )
+
+        changelist = res.context["cl"]
+        self.assertIn(trip1, changelist.queryset)
+        self.assertNotIn(trip2, changelist.queryset)
+
+    def test_admin_trip_filter_by_train_type_id(self):
+        train_type = sample_train_type(name="TrainType1")
+        trip1 = sample_trip(name="Trip1")
+        trip2 = sample_trip(name="Trip2")
+        trip1.train.train_type = train_type
+        trip1.train.save()
+
+        url = reverse(
+            "admin:train_station_resource_trip_changelist"
+        )
+
+        res = self.client.get(
+            url, {"train__train_type__id__exact": train_type.id}
+        )
+
+        changelist = res.context["cl"]
+
+        self.assertIn(trip1, changelist.queryset)
+        self.assertNotIn(trip2, changelist.queryset)

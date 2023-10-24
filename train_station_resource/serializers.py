@@ -42,7 +42,6 @@ class TrainSerializer(serializers.ModelSerializer):
             "cargo_num",
             "seats_in_cargo",
             "train_type",
-            "capacity",
         ]
 
 
@@ -127,6 +126,7 @@ class TrainListSerializer(TrainSerializer):
             "seats_in_cargo",
             "train_type_name",
             "image",
+            "capacity",
         ]
 
 

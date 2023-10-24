@@ -50,11 +50,11 @@ class AuthenticatedRouteApiTests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data["results"], serializers.data)
 
-    def test_create_station_forbidden(self):
+    def test_create_route_forbidden(self):
         res = self.client.post(ROUTE_URL)
         self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
 
-    def test_station_api_has_only_get_and_post_methods(self):
+    def test_route_api_has_only_get_and_post_methods(self):
         res = self.client.post(ROUTE_URL)
         allowed_methods = res.headers["Allow"]
         forbidden_methods = ["PATCH", "PUT", "DELETE"]

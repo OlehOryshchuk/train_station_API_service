@@ -2,12 +2,13 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 
-from rest_framework.test import APIClient
+from rest_framework.test import APIClient, APIRequestFactory
 from rest_framework import status
 
 from train_station_resource.serializers import StationSerializer
 from .models_create_sample import sample_station
 from train_station_resource.models import Station
+from train_station_resource.paginations import CustomPagination
 
 STATION_URL = reverse("train_station:station-list")
 
@@ -45,3 +46,13 @@ class AuthenticatedStationApiTests(TestCase):
         res = self.client.post(STATION_URL)
 
         self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_station_api_has_only_get_and_post_methods(self):
+        res = self.client.post(STATION_URL)
+        allowed_methods = res.headers["Allow"]
+        forbidden_methods = ["PATCH", "PUT", "DELETE"]
+
+        self.assertIn("GET", allowed_methods)
+        self.assertIn("POST", allowed_methods)
+        for method in forbidden_methods:
+            self.assertNotIn(method, allowed_methods)

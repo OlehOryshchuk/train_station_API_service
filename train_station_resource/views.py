@@ -4,12 +4,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, status, mixins
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.filters import SearchFilter, OrderingFilter
 
 from drf_spectacular.utils import (
     extend_schema,
-    OpenApiTypes,
     OpenApiParameter,
     OpenApiExample,
 )
@@ -106,6 +105,7 @@ class TrainViewSet(
     @action(
         methods=["post"],
         detail=True,
+        permission_classes=[IsAdminUser]
     )
     def upload_image(self, request, pk=None):
         train = self.get_object()

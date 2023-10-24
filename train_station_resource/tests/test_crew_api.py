@@ -60,3 +60,33 @@ class AuthenticatedCrewApiTests(TestCase):
         self.assertIn("POST", allowed_methods)
         for method in forbidden_methods:
             self.assertNotIn(method, allowed_methods)
+
+
+class AdminCrewApi(TestCase):
+    def setUp(self) -> None:
+        self.client = APIClient()
+        self.admin = get_user_model().objects.create_user(
+            email="test@gmai.com", password="rvtafj", is_staff=True
+        )
+        self.client.force_authenticate(self.admin)
+
+    def test_admin_can_make_get_request(self):
+        res = self.client.get(CREW_URL)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_admin_can_create_crew(self):
+
+        crew_data = {
+            "first_name": "Elon",
+            "last_name": "Mask"
+        }
+        res = self.client.post(CREW_URL, crew_data)
+
+        crew1 = Crew.objects.get(
+            first_name=crew_data["first_name"],
+            last_name=crew_data["last_name"]
+        )  # Retrieve the specific instance
+        serializer = CrewSerializer(crew1)
+
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(res.data, serializer.data)

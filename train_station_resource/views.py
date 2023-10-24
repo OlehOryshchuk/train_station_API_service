@@ -23,7 +23,7 @@ from .serializers import (
     TrainSerializer,
     TrainListSerializer,
     TrainImageSerializer,
-    TrainDetailSerialize,
+    TrainDetailSerializer,
     TripSerializer,
     TripListSerializer,
     TripDetailSerializer,
@@ -96,7 +96,7 @@ class TrainViewSet(
             return TrainListSerializer
 
         if self.action == "retrieve":
-            return TrainDetailSerialize
+            return TrainDetailSerializer
 
         if self.action == "upload_image":
             return TrainImageSerializer

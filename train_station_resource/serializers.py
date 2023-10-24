@@ -130,7 +130,7 @@ class TrainListSerializer(TrainSerializer):
         ]
 
 
-class TrainDetailSerialize(TrainSerializer):
+class TrainDetailSerializer(TrainSerializer):
     train_type = TrainTypeSerializer(read_only=True)
 
     class Meta:

@@ -189,7 +189,7 @@ class TripListSerializer(TripSerializer):
 class TicketTakenPlacesSerializer(TicketSerializer):
     class Meta:
         model = Ticket
-        fields = ["id", "cargo", "seat"]
+        fields = ["cargo", "seat"]
 
 
 class TripDetailSerializer(TripSerializer):
@@ -197,7 +197,7 @@ class TripDetailSerializer(TripSerializer):
     route = RouteListSerializer(read_only=True)
     train = TrainListSerializer(read_only=True)
     taken_places = TicketTakenPlacesSerializer(
-        many=True, read_only=True
+        many=True, read_only=True, source="tickets"
     )
 
     class Meta:

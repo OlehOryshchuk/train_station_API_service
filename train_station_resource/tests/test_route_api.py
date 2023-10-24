@@ -63,3 +63,36 @@ class AuthenticatedRouteApiTests(TestCase):
         self.assertIn("POST", allowed_methods)
         for method in forbidden_methods:
             self.assertNotIn(method, allowed_methods)
+
+
+class AdminRouteApi(TestCase):
+    def setUp(self) -> None:
+        self.client = APIClient()
+        self.admin = get_user_model().objects.create_user(
+            email="test@gmai.com", password="rvtafj", is_staff=True
+        )
+        self.client.force_authenticate(self.admin)
+
+    def test_admin_can_make_get_request(self):
+        res = self.client.get(ROUTE_URL)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_admin_can_create_route(self):
+        station1 = sample_station(name="Station1")
+        station2 = sample_station(name="Station2")
+
+        route_data = {
+            "source": station1.id,
+            "destination": station2.id,
+            "distance": 50
+        }
+        res = self.client.post(ROUTE_URL, route_data)
+
+        route1 = Route.objects.get(
+            destination=route_data["destination"],
+            source=route_data["source"]
+        )  # Retrieve the specific instance
+        serializer = RouteSerializer(route1)
+
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(res.data, serializer.data)

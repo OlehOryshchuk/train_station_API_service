@@ -86,4 +86,4 @@ def sample_order(user: get_user_model(), **param) -> Order:
 
 
 def detail_url(view_name: str, instance_id: int):
-    return reverse(f"train_station:{view_name}", args=[instance_id])
+    return reverse(f"train_station:{view_name}-detail", args=[instance_id])

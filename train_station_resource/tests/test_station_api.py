@@ -56,3 +56,31 @@ class AuthenticatedStationApiTests(TestCase):
         self.assertIn("POST", allowed_methods)
         for method in forbidden_methods:
             self.assertNotIn(method, allowed_methods)
+
+
+class AdminStationApi(TestCase):
+    def setUp(self) -> None:
+        self.client = APIClient()
+        self.admin = get_user_model().objects.create_user(
+            email="test@gmai.com", password="rvtafj", is_staff=True
+        )
+        self.client.force_authenticate(self.admin)
+
+    def test_admin_can_make_get_request(self):
+        res = self.client.get(STATION_URL)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_admin_can_create_station(self):
+        station_data = {
+            "name": "Station1",
+            "latitude": 50,
+            "longitude": 50
+        }
+        res = self.client.post(STATION_URL, station_data)
+
+        station1 = Station.objects.get(name=station_data["name"])  # Retrieve the specific instance
+        serializer = StationSerializer(station1)
+
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(res.data, serializer.data)
+

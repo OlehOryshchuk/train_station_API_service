@@ -1,5 +1,6 @@
 from datetime import datetime
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 
 from train_station_resource.models import (
     Station,
@@ -82,3 +83,7 @@ def sample_order(user: get_user_model(), **param) -> Order:
     default.update(**param)
 
     return Order.objects.create(**default)
+
+
+def detail_url(view_name: str, instance_id: int):
+    return reverse(f"train_station:{view_name}", args=[instance_id])

@@ -127,3 +127,39 @@ class AuthenticatedTrainApiTests(TestCase):
         self.assertIn("POST", allowed_methods)
         for method in forbidden_methods:
             self.assertNotIn(method, allowed_methods)
+
+
+class AdminTrainApi(TestCase):
+    def setUp(self) -> None:
+        self.client = APIClient()
+        self.admin = get_user_model().objects.create_user(
+            email="test@gmai.com", password="rvtafj", is_staff=True
+        )
+        self.client.force_authenticate(self.admin)
+
+    def test_admin_can_make_get_request(self):
+        res = self.client.get(TRAIN_URL)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_admin_train_can_get_detail(self):
+        train = sample_train(name="Train1")
+        res = self.client.get(detail_url("train", train.id))
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_admin_can_create_train(self):
+        train_type = sample_train_type(name="TrainType1")
+
+        train_data = {
+            "name": "Train1",
+            "cargo_num": 10,
+            "seats_in_cargo": 20,
+            "train_type": train_type.id
+        }
+        res = self.client.post(TRAIN_URL, train_data)
+
+        train = Train.objects.get(name=train_data["name"])  # Retrieve the specific instance
+        serializer = TrainSerializer(train)
+
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(res.data, serializer.data)

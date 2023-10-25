@@ -10,6 +10,7 @@ from train_station_resource.models import (
     Train,
     Trip,
     Order,
+    Ticket
 )
 
 
@@ -83,6 +84,20 @@ def sample_order(user: get_user_model(), **param) -> Order:
     default.update(**param)
 
     return Order.objects.create(**default)
+
+
+def sample_ticket(user: get_user_model(), trip: Trip, **param) -> Ticket:
+    """Create ticket and also order for specific user"""
+    default = {
+        "cargo": 1,
+        "seat": 1,
+        "trip": trip,
+        "order": sample_order(user)
+    }
+
+    default.update(**param)
+
+    return Ticket.objects.create(**default)
 
 
 def detail_url(view_name: str, instance_id: int):

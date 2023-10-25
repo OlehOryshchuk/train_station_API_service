@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
@@ -16,6 +18,7 @@ from .models_create_sample import (
     sample_train,
     sample_route,
     sample_station,
+    sample_crew,
     detail_url,
 )
 from train_station_resource.models import Trip
@@ -189,3 +192,120 @@ class AuthenticatedTripApiTests(TestCase):
         self.assertIn("POST", allowed_methods)
         for method in forbidden_methods:
             self.assertNotIn(method, allowed_methods)
+
+
+class AdminTripApi(TestCase):
+    def setUp(self) -> None:
+        self.client = APIClient()
+        self.admin = get_user_model().objects.create_superuser(
+            email="test@gmai.com", password="rvtafj"
+        )
+        self.client.force_authenticate(self.admin)
+
+    def test_admin_can_make_get_request(self):
+        res = self.client.get(TRIP_URL)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_admin_trip_can_make_get_detail(self):
+        trip = sample_trip(name="Trip1")
+        res = self.client.get(detail_url("trip", trip.id))
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_admin_can_create_trip(self):
+        route = sample_route(
+            sample_station("Station1"),
+            sample_station("Station2")
+        )
+        crew = sample_crew(
+            first_name="Elon", last_name="Mask"
+        )
+        data = {
+            "crew": [crew.id],
+            "route": route.id,
+            "train": sample_train("ChangedTrain").id,
+            "departure_time": datetime.today(),
+            "arrival_time": datetime.today() + timedelta(days=2),
+        }
+
+        res = self.client.post(TRIP_URL, data)
+
+        trip = Trip.objects.get(
+            train_id=data["train"]
+        )  # Retrieve the specific instance
+        serializer = TripSerializer(trip)
+
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(res.data, serializer.data)
+
+    def test_admin_trip_can_make_put_request(self):
+        trip = sample_trip(name="Trip1")
+        route = sample_route(
+            sample_station("Station1"),
+            sample_station("Station2")
+        )
+        crew = sample_crew(
+            first_name="Elon", last_name="Mask"
+        )
+        data = {
+            "crew": [crew.id],
+            "route": route.id,
+            "train": sample_train("ChangedTrain").id,
+            "departure_time": datetime.today(),
+            "arrival_time": datetime.today(),
+        }
+
+        res = self.client.put(
+            detail_url("trip", trip.id),
+            data
+        )
+
+        trip = Trip.objects.get(id=trip.id)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            res.data["route"], trip.route.id,
+        )
+        self.assertEqual(
+            res.data["crew"][0], crew.id,
+        )
+        self.assertEqual(
+            res.data["train"], trip.train.id,
+        )
+
+    def test_admin_trip_can_make_patch_request(self):
+        trip = sample_trip(name="Trip1")
+        route = sample_route(
+            sample_station("Station1"),
+            sample_station("Station2")
+        )
+        data = {
+            "crew": [],
+            "route": route.id,
+            "arrival_time": datetime.today() + timedelta(days=2),
+        }
+
+        res = self.client.patch(
+            detail_url("trip", trip.id),
+            data
+        )
+        trip = Trip.objects.get(id=trip.id)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            res.data["crew"], []
+        )
+        self.assertEqual(
+            res.data["route"], trip.route.id,
+        )
+
+    def test_admin_can_delete_trip(self):
+        trip = sample_trip(name="Trip1")
+
+        res = self.client.delete(
+            detail_url("trip", trip.id)
+        )
+
+        self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
+        with self.assertRaises(Trip.DoesNotExist):
+            Trip.objects.get(id=trip.id)

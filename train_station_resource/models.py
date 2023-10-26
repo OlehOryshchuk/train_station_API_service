@@ -65,6 +65,9 @@ class Route(models.Model):
     def string_repr(self) -> str:
         return f"{self.source} - {self.destination}"
 
+    def __str__(self):
+        return f"Route id  {self.id}"
+
 
 class TrainType(models.Model):
     name = models.CharField(unique=True, max_length=150)

@@ -115,7 +115,9 @@ class Migration(migrations.Migration):
                     models.ImageField(
                         blank=True,
                         null=True,
-                        upload_to=train_station_resource.models.train_image_file_path,
+                        upload_to=(
+                            train_station_resource.models.train_image_file_path
+                        )
                     ),
                 ),
             ],
@@ -134,7 +136,9 @@ class Migration(migrations.Migration):
                 ),
                 ("departure_time", models.DateTimeField()),
                 ("arrival_time", models.DateTimeField()),
-                ("crew", models.ManyToManyField(to="train_station_resource.crew")),
+                ("crew", models.ManyToManyField(
+                    to="train_station_resource.crew")
+                 ),
                 (
                     "route",
                     models.ForeignKey(
@@ -173,7 +177,10 @@ class Migration(migrations.Migration):
             ],
             options={
                 "indexes": [
-                    models.Index(fields=["name"], name="train_stati_name_f7297d_idx")
+                    models.Index(
+                        fields=["name"],
+                        name="train_stati_name_f7297d_idx"
+                    )
                 ],
             },
         ),
@@ -241,7 +248,10 @@ class Migration(migrations.Migration):
         ),
         migrations.AddIndex(
             model_name="trip",
-            index=models.Index(fields=["route"], name="train_stati_route_i_8dfa54_idx"),
+            index=models.Index(
+                fields=["route"],
+                name="train_stati_route_i_8dfa54_idx"
+            ),
         ),
         migrations.AlterUniqueTogether(
             name="ticket",

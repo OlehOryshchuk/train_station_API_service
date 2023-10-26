@@ -79,7 +79,9 @@ class AdminTrainTypeApi(TestCase):
         }
         res = self.client.post(TRAIN_TYPE_URL, train_type_data)
 
-        station1 = TrainType.objects.get(name=train_type_data["name"])  # Retrieve the specific instance
+        station1 = TrainType.objects.get(
+            name=train_type_data["name"]
+        )  # Retrieve the specific instance
         serializer = TrainTypeSerializer(station1)
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)

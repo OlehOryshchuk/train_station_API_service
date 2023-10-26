@@ -160,7 +160,9 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": (
         "train_station_resource.permissions.IsAdminOrIfAuthenticatedReadOnly",
     ),
-    "DEFAULT_PAGINATION_CLASS": "train_station_resource.paginations.CustomPagination",
+    "DEFAULT_PAGINATION_CLASS": (
+        "train_station_resource.paginations.CustomPagination"
+    ),
     "DEFAULT_THROTTLE_CLASSES": [
         "rest_framework.throttling.UserRateThrottle"
     ],

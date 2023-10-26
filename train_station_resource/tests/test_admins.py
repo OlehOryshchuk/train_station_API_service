@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 
-from .models_create_sample import(
+from .models_create_sample import (
     sample_station,
     sample_route,
     sample_train_type,

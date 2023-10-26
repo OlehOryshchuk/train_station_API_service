@@ -2,13 +2,12 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 
-from rest_framework.test import APIClient, APIRequestFactory
+from rest_framework.test import APIClient
 from rest_framework import status
 
 from train_station_resource.serializers import StationSerializer
 from .models_create_sample import sample_station
 from train_station_resource.models import Station
-from train_station_resource.paginations import CustomPagination
 
 STATION_URL = reverse("train_station:station-list")
 
@@ -82,9 +81,10 @@ class AdminStationApi(TestCase):
         }
         res = self.client.post(STATION_URL, station_data)
 
-        station1 = Station.objects.get(name=station_data["name"])  # Retrieve the specific instance
+        station1 = Station.objects.get(
+            name=station_data["name"]
+        )  # Retrieve the specific instance
         serializer = StationSerializer(station1)
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         self.assertEqual(res.data, serializer.data)
-

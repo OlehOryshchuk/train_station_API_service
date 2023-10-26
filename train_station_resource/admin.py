@@ -60,7 +60,9 @@ class TripAdmin(admin.ModelAdmin):
     def display_route_string_repr(self, obj):
         return obj.route.string_repr  # Reference the property
 
-    display_route_string_repr.short_description = "Route"  # Customize the column header
+    display_route_string_repr.short_description = (
+        "Route"
+    )  # Customize the column header
 
 
 class TicketInline(admin.TabularInline):

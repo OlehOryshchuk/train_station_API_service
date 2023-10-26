@@ -10,7 +10,7 @@ from train_station_resource.serializers import (
     RouteListSerializer,
 )
 from .models_create_sample import sample_station, sample_route
-from train_station_resource.models import Station, Route
+from train_station_resource.models import Route
 
 ROUTE_URL = reverse("train_station:route-list")
 
@@ -114,4 +114,3 @@ class AdminRouteApi(TestCase):
             )
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
-

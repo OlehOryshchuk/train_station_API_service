@@ -8,7 +8,6 @@ from rest_framework.test import APIClient
 from rest_framework import status
 
 from train_station_resource.serializers import (
-    OrderSerializer,
     OrderListSerializer,
 )
 from .models_create_sample import (

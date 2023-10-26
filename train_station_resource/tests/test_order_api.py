@@ -61,9 +61,7 @@ class AuthenticatedOrderApiTests(TestCase):
 
         res = self.client.get(ORDER_URL)
 
-        user_orders = Order.objects.filter(user=self.user).order_by(
-            "created_at"
-        )
+        user_orders = Order.objects.filter(user=self.user)
         serializer = OrderListSerializer(user_orders, many=True)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)

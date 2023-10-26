@@ -22,6 +22,14 @@ class StationSerializer(serializers.ModelSerializer):
 
 
 class RouteSerializer(serializers.ModelSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        Route.validate_route(
+            attrs["source"],
+            attrs["destination"],
+            ValidationError,
+        )
+
     class Meta:
         model = Route
         fields = "__all__"

@@ -36,15 +36,23 @@ class Route(models.Model):
             models.Index(fields=["source"])
         ]
 
-    def clean(self):
-        if self.source == self.destination:
-            raise ValidationError(
+    @staticmethod
+    def validate_route(source, destination, error_to_raise):
+        if source == destination:
+            raise error_to_raise(
                 {
                     "source_destination": (
                         "Source and destination cannot be the same."
                     )
                 }
             )
+
+    def clean(self):
+        Route.validate_route(
+            self.source,
+            self.destination,
+            ValidationError
+        )
 
     def save(
         self,

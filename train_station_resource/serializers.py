@@ -29,6 +29,7 @@ class RouteSerializer(serializers.ModelSerializer):
             attrs["destination"],
             ValidationError,
         )
+        return data
 
     class Meta:
         model = Route

@@ -96,3 +96,22 @@ class AdminRouteApi(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         self.assertEqual(res.data, serializer.data)
+
+    def test_admin_can_create_invalid_route(self):
+        station1 = sample_station(name="Station1")
+
+        route_data = {
+            "source": station1.id,
+            "destination": station1.id,
+            "distance": 50
+        }
+        res = self.client.post(ROUTE_URL, route_data)
+
+        with self.assertRaises(Route.DoesNotExist):
+            Route.objects.get(
+                destination=route_data["destination"],
+                source=route_data["source"]
+            )
+
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+

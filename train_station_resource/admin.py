@@ -21,7 +21,7 @@ class StationAdmin(admin.ModelAdmin):
 @admin.register(Route)
 class RouteAdmin(admin.ModelAdmin):
     search_fields = ["source__name"]
-    list_display = ["source", "destination", "distance"]
+    list_display = ["id", "source", "destination", "distance"]
 
 
 @admin.register(TrainType)

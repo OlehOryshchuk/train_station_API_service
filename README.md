@@ -20,7 +20,8 @@ like creating, listing, filtering, searching, and managing train stations, trips
 * Users can filter trips by train and trip route
 * Users can filter ordered tickets by trip route
     and ordering orders in ascending and descending order
-* API documentation
+* API documentation 
+* Admin panel /admin/
 
 ## Installation
 1. Clone git repository to your local machine:
@@ -31,7 +32,7 @@ like creating, listing, filtering, searching, and managing train stations, trips
 ```
     cp .env.sample .env
 ```
-3. Run command:
+3. Run command. Docker should be installed:
 ```
     docker-compose up --build
 ```
@@ -60,6 +61,9 @@ User API endpoints:
 - `/user/token/`
 - `/user/token/refresh/`
 - `/user/token/verify/`
+
+Admin (superuser) endpoint:
+- `/admin/`
 
 Documentation:
 

@@ -1288,7 +1288,7 @@
     "model": "user.user",
     "pk": 1,
     "fields": {
-        "password": "pbkdf2_sha256$600000$F7GriwWnsl7bnUftBfqPh7$IEmBnOXJ1S0wSU7NoOAqhjkLgfJsk9IC8O5nCn4Rezo=",
+        "password": "pbkdf2_sha256$600000$Y6WMWYfh1r5Hi1UbBUCAma$J9NiZu+py8dZ99FJdp4lL8f5lZMh45CxPxEFI8zy1qU=",
         "last_login": "2023-10-26T21:41:24.110",
         "is_superuser": true,
         "first_name": "",

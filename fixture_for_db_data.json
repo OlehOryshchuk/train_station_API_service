@@ -7,7 +7,7 @@
         "user": 1,
         "content_type": 10,
         "object_id": "1",
-        "object_repr": "Krak體 G丑wny",
+        "object_repr": "Krak贸w G艂贸wny",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -33,7 +33,7 @@
         "user": 1,
         "content_type": 9,
         "object_id": "1",
-        "object_repr": "Krak體 G丑wny-Warszawa Centralna",
+        "object_repr": "Krak贸w G艂贸wny-Warszawa Centralna",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -46,7 +46,7 @@
         "user": 1,
         "content_type": 9,
         "object_id": "2",
-        "object_repr": "Warszawa Centralna-Krak體 G丑wny",
+        "object_repr": "Warszawa Centralna-Krak贸w G艂贸wny",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -241,7 +241,7 @@
         "user": 1,
         "content_type": 13,
         "object_id": "1",
-        "object_repr": "Krak體 G丑wny-Warszawa Centralna 2023-10-26 09:00:00+00:00",
+        "object_repr": "Krak贸w G艂贸wny-Warszawa Centralna 2023-10-26 09:00:00+00:00",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -254,7 +254,7 @@
         "user": 1,
         "content_type": 13,
         "object_id": "2",
-        "object_repr": "Warszawa Centralna-Krak體 G丑wny 2023-10-26 10:30:00+00:00",
+        "object_repr": "Warszawa Centralna-Krak贸w G艂贸wny 2023-10-26 10:30:00+00:00",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -371,7 +371,7 @@
         "user": 1,
         "content_type": 14,
         "object_id": "2",
-        "object_repr": "Krak體 G丑wny - Warszawa Centralna (cargo: 1, seat: 3)",
+        "object_repr": "Krak贸w G艂贸wny - Warszawa Centralna (cargo: 1, seat: 3)",
         "action_flag": 3,
         "change_message": ""
     }
@@ -384,7 +384,7 @@
         "user": 1,
         "content_type": 14,
         "object_id": "3",
-        "object_repr": "Warszawa Centralna - Krak體 G丑wny (cargo: 1, seat: 3)",
+        "object_repr": "Warszawa Centralna - Krak贸w G艂贸wny (cargo: 1, seat: 3)",
         "action_flag": 3,
         "change_message": ""
     }
@@ -397,7 +397,7 @@
         "user": 1,
         "content_type": 14,
         "object_id": "1",
-        "object_repr": "Krak體 G丑wny - Warszawa Centralna (cargo: 1, seat: 2)",
+        "object_repr": "Krak贸w G艂贸wny - Warszawa Centralna (cargo: 1, seat: 2)",
         "action_flag": 3,
         "change_message": ""
     }
@@ -410,7 +410,7 @@
         "user": 1,
         "content_type": 14,
         "object_id": "4",
-        "object_repr": "Krak體 G丑wny - Warszawa Centralna (cargo: 1, seat: 1)",
+        "object_repr": "Krak贸w G艂贸wny - Warszawa Centralna (cargo: 1, seat: 1)",
         "action_flag": 2,
         "change_message": "[]"
     }
@@ -462,7 +462,7 @@
         "user": 1,
         "content_type": 13,
         "object_id": "2",
-        "object_repr": "Warszawa Centralna - Krak體 G丑wny",
+        "object_repr": "Warszawa Centralna - Krak贸w G艂贸wny",
         "action_flag": 3,
         "change_message": ""
     }
@@ -475,7 +475,7 @@
         "user": 1,
         "content_type": 13,
         "object_id": "3",
-        "object_repr": "Krak體 G丑wny - Warszawa Centralna",
+        "object_repr": "Krak贸w G艂贸wny - Warszawa Centralna",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -1108,7 +1108,7 @@
     "model": "train_station_resource.station",
     "pk": 1,
     "fields": {
-        "name": "Krak體 G丑wny",
+        "name": "Krak贸w G艂贸wny",
         "latitude": 1000.0,
         "longitude": 1553.0
     }

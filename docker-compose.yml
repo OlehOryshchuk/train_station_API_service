@@ -23,7 +23,7 @@ services:
       env_file:
         - .env
       volumes:
-        - db_data: /var/lib/postgresql/data
+        - db_data:/var/lib/postgresql/data
 volumes:
-  db:
+  db_data:
     driver: local

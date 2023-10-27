@@ -46,11 +46,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
     "drf_spectacular",
     "debug_toolbar",
+    "django_filters",
+    "django_dump_load_utf8",
+
     "rest_framework",
     "train_station_resource",
-    "django_filters",
     "user"
 ]
 

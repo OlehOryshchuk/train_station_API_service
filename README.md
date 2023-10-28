@@ -48,6 +48,7 @@ To access the API, navigate to http://localhost:8000/api/ in your web browser an
 
 ### Endpoints
 Train Station API endpoints 
+- `/train_station/`
 - `/train_station/stations/`
 - `/train_station/train_types/`
 - `/train_station/crews/`

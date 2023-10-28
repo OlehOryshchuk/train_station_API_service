@@ -132,11 +132,11 @@ class Crew(models.Model):
         verbose_name_plural = "Crew members"
 
     def __str__(self) -> str:
-        return self.first_name + " " + self.last_name
+        return f"{self.first_name} {self.last_name}"
 
     @property
     def full_name(self) -> str:
-        return self.first_name + " " + self.last_name
+        return f"{self.first_name} {self.last_name}"
 
 
 class Trip(models.Model):
